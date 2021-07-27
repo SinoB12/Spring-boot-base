@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.sampleproject.repository.EmployeeRepository">
+
+    <resultMap id="BaseResultMap" type="com.example.sampleproject.entity.Employee">
+        <id column="EMP_NO" property="empNo"/>
+        <result column="EMP_NM" property="empName"/>
+        <result column="EMAIL" property="email"/>
+        <result column="PHONE_1" property="phone1"/>
+        <result column="PHONE_2" property="phone2"/>
+        <result column="DL_YN" property="deleteYn"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        EMP_NO,
+        EMP_NM,
+        EMAIL,
+        PHONE_1,
+        PHONE_2,
+        DL_YN
+    </sql>
+    <insert id="insert">
+        INSERT INTO EMP_BAS
+        <if test="empNo != null">
+            EMP_NO
+        </if>
+        <if test="empName != null">
+            ,EMP_NM
+        </if>
+        <if test="email != null">
+            ,EMAIL
+        </if>
+        <if test="phone1 != null">
+            ,PHONE_1
+        </if>
+        <if test="phone2 != null">
+            ,PHONE_2
+        </if>
+        VALUES (
+        <if test="empNo != null">
+            #{empNo}
+        </if>
+        <if test="empName != null">
+            ,#{empName}
+        </if>
+        <if test="email != null">
+            ,#{email}
+        </if>
+        <if test="phone1 != null">
+            ,#{phone1}
+        </if>
+        <if test="phone2 != null">
+            ,#{phone2}
+        </if>
+        )
+    </insert>
+
+    <select id="countAll" resultType="long">
+        SELECT COUNT(*)
+        FROM EMP_BAS
+    </select>
+
+    <select id="findAll" resultMap="BaseResultMap">
+        SELECT  EMP_NO,
+                EMP_NM,
+                EMAIL,
+                PHONE_1,
+                PHONE_2,
+                DL_YN
+        FROM EMP_BAS
+    </select>
+
+    <select id="findById" resultMap="BaseResultMap">
+        SELECT  EMP_NO,
+                EMP_NM,
+                EMAIL,
+                PHONE_1,
+                PHONE_2,
+                DL_YN
+        FROM EMP_BAS
+        WHERE EMP_NO = #{id}
+    </select>
+
+    <select id="findByEmail" resultMap="BaseResultMap">
+        SELECT  EMP_NO,
+                EMP_NM,
+                EMAIL,
+                PHONE_1,
+                PHONE_2,
+                DL_YN
+        FROM EMP_BAS
+        WHERE EMAIL = #{email}
+        LIMIT 1;
+    </select>
+    <select id="findListRoleById" resultType="org.springframework.security.core.GrantedAuthority">
+
+
+    </select>
+
+</mapper>
